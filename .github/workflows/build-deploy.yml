@@ -46,22 +46,22 @@ jobs:
         run: docker build flask/. -t $REPO/$IMAGE:${{ steps.version_bump.outputs.tag }}
       - name: Push image
         run: docker push $REPO/$IMAGE:${{ steps.version_bump.outputs.tag }}
-  deploy_GKE:
-    runs-on: 'ubuntu-latest'
-    needs: [build]
-    steps:
-      - uses: google-github-actions/setup-gcloud@v0
-        with:
-          service_account_email: ${{ secrets.GKE_EMAIL }}
-          service_account_key: ${{ secrets.GKE_KEY }}
-      - name: Install GKE auth plugin
-        run: |
-          gcloud components install gke-gcloud-auth-plugin
-      - name: Configure kubectl
-        run: |
-          gcloud container clusters get-credentials  breakingbad-gke-gradjob-gke --zone europe-west1-c --project breakingbad-gke-gradjob
-      - name: checkout repo
-        uses: actions/checkout@v2.3.4
-      - name: Deploy application
-        run: |
-          kubectl apply -f deployment.yaml
+  # deploy_GKE:
+  #   runs-on: 'ubuntu-latest'
+  #   needs: [build]
+  #   steps:
+  #     - uses: google-github-actions/setup-gcloud@v0
+  #       with:
+  #         service_account_email: ${{ secrets.GKE_EMAIL }}
+  #         service_account_key: ${{ secrets.GKE_KEY }}
+  #     - name: Install GKE auth plugin
+  #       run: |
+  #         gcloud components install gke-gcloud-auth-plugin
+  #     - name: Configure kubectl
+  #       run: |
+  #         gcloud container clusters get-credentials  breakingbad-gke-gradjob-gke --zone europe-west1-c --project breakingbad-gke-gradjob
+  #     - name: checkout repo
+  #       uses: actions/checkout@v2.3.4
+  #     - name: Deploy application
+  #       run: |
+  #         kubectl apply -f deployment.yaml

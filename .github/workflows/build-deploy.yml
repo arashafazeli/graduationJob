@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     env:
-      REPO: eu.gcr.io/breakingbad-gke-gradjob
-      IMAGE: flask-app
+      REPO: eu.gcr.io/gitops-cluster
+      IMAGE: webshop-service
     outputs:
       tag: ${{ steps.version_bump.outputs.tag }}
     steps:

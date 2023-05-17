@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: mysql
+        image: mysql:8.0.33
         imagePullPolicy: Never
         env:
         - name: MYSQL_ROOT_PASSWORD
@@ -51,4 +51,4 @@ spec:
     name: mysql
   selector:
     app: db
-  type: NodePort
+  type: LoadBalancer

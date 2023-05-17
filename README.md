@@ -1,44 +1,53 @@
-<img src="https://drive.google.com/thumbnail?id=10MLLfi0yYpP0EZF3M7xVTN2Byc3pCZAm" alt="Logo" width="120"/>
+# Deploying a Flask API and MySQL server on Kubernetes
 
-# Flask-webshop
+This repo contains code that 
+1) Deploys a MySQL server on a Kubernetes cluster
+2) Attaches a persistent volume to it, so the data remains contained if pods are restarting
+3) Deploys a Flask API to add, delete and modify users in the MySQL database
 
-This was the final group project in the course "DATA2410 Networking and cloud computing" at OsloMet. <br />
-The task was to build a simple webshop using Python Flask and a RESTful API. <br />
+## Prerequisites
+1. Have `Docker` and the `Kubernetes CLI` (`kubectl`) installed together with `Minikube` (https://kubernetes.io/docs/tasks/tools/)
 
-## How to run:
-1. Download **Docker** and **Docker compose** from: https://docs.docker.com/get-docker/
-2. Clone or download this project and navigate to the folder with the **docker-compose.yml** file. 
-3. In the folder, open up a terminal or command prompt and run the following command:
-   ```console
-   docker-compose up
-   ```
-   NB: You need to be sudo to run the command in Linux. <br />
-   
-### Navigate to the following links after the command is finished:
+## Getting started
+1. Clone the repository
+2. Configure `Docker` to use the `Docker daemon` in your kubernetes cluster via your terminal: `eval $(minikube docker-env)`
+3. Pull the latest mysql image from `Dockerhub`: `Docker pull mysql`
+4. Build a kubernetes-api image with the Dockerfile in this repo: `Docker build . -t flask-api`
 
-URL | Description
------------- | -------------
-https://localhost:5000 | The webshop
-http://localhost:9090  | Prometheus (resource tracking)
-http://localhost:3000  | Grafana (graphically displays data from prometheus)
+## Secrets
+`Kubernetes Secrets` can store and manage sensitive information. For this example we will define a password for the
+`root` user of the `MySQL` server using the `Opaque` secret type. For more info: https://kubernetes.io/docs/concepts/configuration/secret/
 
-### Important
-When accessing https://localhost:5000 you will get a warning in your browser. This happens because the
-website uses a self-signed SSL certificate. Allow this in your browser to continue.
+1. Encode your password in your terminal: `echo -n super-secret-passwod | base64`
+2. Add the output to the `flakapi-secrets.yml` file at the `db_root_password` field
 
-## Documentation
-In-depth documentation: https://drive.google.com/file/d/1pGqMooQkV7aHccHx2ehbwOMh8TQJfL9l/view?usp=sharing
+## Deployments
+Get the secrets, persistent volume in place and apply the deployments for the `MySQL` database and `Flask API`
 
-## Technologies
-Front end:
- - HTML, CSS (Bootstrap) and JavaScript (jQuery)
- 
-Backend:
- - Python, with the Flask framework
- - MySQL (database)
- 
- Other features:
-  - Resource monitoring with Promethues and Grafana
- 
- Deployment
-  - Docker and Docker compose
+1. Add the secrets to your `kubernetes cluster`: `kubectl apply -f flaskapi-secrets.yml`
+2. Create the `persistent volume` and `persistent volume claim` for the database: `kubectl apply -f mysql-pv.yml`
+3. Create the `MySQL` deployment: `kubectl apply -f mysql-deployment.yml`
+4. Create the `Flask API` deployment: `kubectl apply -f flaskapp-deployment.yml`
+
+You can check the status of the pods, services and deployments.
+
+## Creating database and schema
+The API can only be used if the proper database and schemas are set. This can be done via the terminal.
+1. Connect to your `MySQL database` by setting up a temporary pod as a `mysql-client`: 
+   `kubectl run -it --rm --image=mysql --restart=Never mysql-client -- mysql --host mysql --password=<super-secret-password>`
+   make sure to enter the (decoded) password specified in the `flaskapi-secrets.yml`
+2. Create the database and table
+   1. `CREATE DATABASE flaskapi;`
+    2. `USE flaskapi;`
+    3. `CREATE TABLE users(user_id INT PRIMARY KEY AUTO_INCREMENT, user_name VARCHAR(255), user_email VARCHAR(255), user_password VARCHAR(255));`
+    
+## Expose the API
+The API can be accessed by exposing it using minikube: `minikube service flask-service`. This will return a `URL`. If you paste this to your browser you will see the `hello world` message. You can use this `service_URL` to make requests to the `API`
+
+## Start making requests
+Now you can use the `API` to `CRUD` your database
+1. add a user: `curl -H "Content-Type: application/json" -d '{"name": "<user_name>", "email": "<user_email>", "pwd": "<user_password>"}' <service_URL>/create`
+2. get all users: `curl <service_URL>/users`
+3. get information of a specific user: `curl <service_URL>/user/<user_id>`
+4. delete a user by user_id: `curl -H "Content-Type: application/json" <service_URL>/delete/<user_id>`
+5. update a user's information: `curl -H "Content-Type: application/json" -d {"name": "<user_name>", "email": "<user_email>", "pwd": "<user_password>", "user_id": <user_id>} <service_URL>/update`

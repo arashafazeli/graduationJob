@@ -1,4 +1,0 @@
-flask
-mysqlclient
-flask-mysqldb
-prometheus_client

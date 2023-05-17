@@ -11,7 +11,7 @@ jobs:
     environment: production
     env:
       REPO: eu.gcr.io/gitops-cluster
-      IMAGE: webshop-service
+      IMAGE: flask-api
     outputs:
       tag: ${{ steps.version_bump.outputs.tag }}
     steps:

@@ -64,8 +64,8 @@ INSERT INTO `user` (`input`, `output`, `time`, `id`, `title`) VALUES
 ('hey', 'Hello :-) ', '2017-08-24 00:21:01', 25, NULL),
 ('website', 'http://ruet.ac.bd', '2017-08-25 20:05:43', 26, 'Website'),
 ('hello', 'Hi. How Can I Help You ?', '2017-08-27 12:24:55', 27, NULL),
-('facility', 'Accomodation\r\n\r\nhttp://www.ruet.ac.bd/articles/Accommodation/19\r\n\r\nLibrary\r\n\r\nhttp://www.ruet.ac.bd/articles/RUET%20Central%20Library/2\r\n\r\nTransport\r\n\r\nhttp://www.ruet.ac.bd/articles/Transportation/21\r\n\r\nMedical\r\n\r\nhttp://www.ruet.ac.bd/articles/Medical%20Centre/20\r\n\r\nPostal And Banking\r\n\r\nhttp://www.ruet.ac.bd/articles/Postal%20%26%20Banking/239\r\n\r\nComputer Centre\r\n\r\nhttp://ccc.ruet.ac.bd/\r\n', '2017-08-27 19:10:40', 29, 'Facility'),
-('ruet map', 'Campus Map\r\n\r\nhttp://www.ruet.ac.bd/articles/University%20Map/235', '2017-08-27 19:46:36', 30, 'Ruet Map');
+('facility', 'Accomodation\r\n\r\nhttp://www.ruet.ac.bd/article7 19:46:36', 30, 'Ruet Map');s/Accommodation/19\r\n\r\nLibrary\r\n\r\nhttp://www.ruet.ac.bd/articles/RUET%20Central%20Library/2\r\n\r\nTransport\r\n\r\nhttp://www.ruet.ac.bd/articles/Transportation/21\r\n\r\nMedical\r\n\r\nhttp://www.ruet.ac.bd/articles/Medical%20Centre/20\r\n\r\nPostal And Banking\r\n\r\nhttp://www.ruet.ac.bd/articles/Postal%20%26%20Banking/239\r\n\r\nComputer Centre\r\n\r\nhttp://ccc.ruet.ac.bd/\r\n', '2017-08-27 19:10:40', 29, 'Facility'),
+('ruet map', 'Campus Map\r\n\r\nhttp://www.ruet.ac.bd/articles/University%20Map/235', '2017-08-2
 
 --
 -- Indexes for dumped tables

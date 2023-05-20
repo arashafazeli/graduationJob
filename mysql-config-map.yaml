@@ -3,9 +3,9 @@ kind: ConfigMap
 metadata:
   name: mysql-preload-data-config
   labels:
-    name: mysql-pv-volume
-    app: webapp-sql
-  namespace: development
+    name: mysql-pv-claim
+    app: mysql
+  namespace: default
 data:
   init.sql: |
     CREATE DATABASE IF NOT EXISTS`chat`;

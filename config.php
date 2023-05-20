@@ -1,8 +1,8 @@
 <?php
 
-$host="localhost";
+$host="mysql";
 $user="root";
-$pass="";
+$pass="password";
 $db="chat";
 
 $con=mysqli_connect($host,$user,$pass,$db);
@@ -14,7 +14,7 @@ if(!$con)
 }
 else
 {
-	//echo("Connected");
+	echo("Connected");
 }
 
 

@@ -33,13 +33,25 @@ spec:
         name: mysql
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: password
+          valueFrom:
+            secretKeyRef:
+              key: root-password
+              name: mysql-secret
         - name: MYSQL_DATABASE
-          value: chat
+          valueFrom:
+            secretKeyRef:
+              key: database-name
+              name: mysql-secret
         - name: MYSQL_USER
-          value: db_user
+          valueFrom:
+            secretKeyRef:
+              key: user-name
+              name: mysql-secret
         - name: MYSQL_PASSWORD
-          value: password
+          valueFrom:
+            secretKeyRef:
+              key: db-password
+              name:  mysql-secret 
         args: ["--default-authentication-plugin=mysql_native_password"]
         ports:
         - containerPort: 3306

@@ -1,6 +1,6 @@
 <?php
 
-$host='10.112.0.65';
+$host='sqldb';
 $user='root';
 $pass='password';
 $db='chat';

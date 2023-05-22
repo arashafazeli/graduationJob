@@ -1,11 +1,11 @@
 <?php
 
-$host='mysql-svc:3306';
+$host='mysql-svc';
 $user='root';
 $pass='password';
 $db='chat';
 
-$con=mysqli_connect($host,$user,$pass,$db);
+$con=mysqli_connect($host, $user, $pass, $db);
 
 if(!$con)
 {

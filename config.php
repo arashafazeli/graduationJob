@@ -1,6 +1,6 @@
 <?php
 
-$host='mysql';
+$host='http://mysql';
 $user='root';
 $pass='password';
 $db='chat';

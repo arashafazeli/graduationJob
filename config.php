@@ -1,6 +1,6 @@
 <?php
 
-$host='mysql-svc';
+$host='mysql-svc:3306';
 $user='root';
 $pass='password';
 $db='chat';

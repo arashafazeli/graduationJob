@@ -14,7 +14,7 @@ spec:
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
-  name: chatbot-mysql
+  name: sqldb
   labels:
     app: mysql
 spec:
@@ -37,8 +37,23 @@ spec:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
-              key: password
-              name: mysql-pass
+              key: root-password
+              name: mysql-secret
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              key: database-name
+              name: mysql-secret
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              key: user-name
+              name: mysql-secret
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: db-password
+              name:  mysql-secret 
         args: ["--default-authentication-plugin=mysql_native_password"]
         ports:
         - containerPort: 3306
